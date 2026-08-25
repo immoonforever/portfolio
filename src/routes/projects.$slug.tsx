@@ -581,11 +581,13 @@ function MediaGridSection({
   title,
   subtitle,
   images,
+  centerIncompleteRow = false,
   openLightbox,
 }: {
   title: string;
   subtitle: string;
   images: GalleryImage[];
+  centerIncompleteRow?: boolean;
   openLightbox: (src: string) => void;
 }) {
   return (
@@ -600,13 +602,21 @@ function MediaGridSection({
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div
+            className={
+              centerIncompleteRow
+                ? "mt-10 flex flex-wrap justify-center gap-5"
+                : "mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
+            }
+          >
             {images.map((image, index) => (
               <button
                 key={`${title}-${image.alt}-${index}`}
                 type="button"
                 onClick={() => openLightbox(image.src)}
-                className={`group block w-full overflow-hidden rounded-[20px] bg-white text-left shadow-sm ring-1 ring-black/6 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-foreground/30 ${image.className ?? ""}`}
+                className={`group block w-full overflow-hidden rounded-[20px] bg-white text-left shadow-sm ring-1 ring-black/6 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-foreground/30 ${
+                  centerIncompleteRow ? "md:w-[calc((100%-1.25rem)/2)] xl:w-[calc((100%-2.5rem)/3)]" : ""
+                } ${image.className ?? ""}`}
               >
                 <img src={image.src} alt={image.alt} loading="lazy" className="block h-auto w-full object-contain" />
               </button>
@@ -638,6 +648,7 @@ function GallerySection({ openLightbox }: { openLightbox: (src: string) => void 
       title="GALLERY"
       subtitle="Selected campaign and event creatives from E-Summit 2026."
       images={galleryImages}
+      centerIncompleteRow
       openLightbox={openLightbox}
     />
   );
