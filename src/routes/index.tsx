@@ -1425,8 +1425,8 @@ function Footer() {
                 <li key={label}>
                   <a
                     href={href}
-                    target={href === "/ZoyaShaikh_Resume.pdf" || href.startsWith("https://") ? "_blank" : undefined}
-                    rel={href === "/ZoyaShaikh_Resume.pdf" ? "noopener noreferrer" : href.startsWith("https://") ? "noopener noreferrer" : undefined}
+                    target={label === "LinkedIn" || href === "/ZoyaShaikh_Resume.pdf" ? "_blank" : undefined}
+                    rel={label === "LinkedIn" || href === "/ZoyaShaikh_Resume.pdf" ? "noopener noreferrer" : undefined}
                     className="group inline-flex items-center gap-3 text-[#f5f0e6]/85 transition-colors duration-[250ms] hover:text-[#f5f0e6]"
                   >
                     <span className="link-underline-inner">{label}</span>

@@ -896,7 +896,7 @@ function Footer() {
             </p>
             <ul className="mt-4 space-y-3 text-[16px]">
               {[
-                ["LinkedIn", "#"],
+                ["LinkedIn", "https://www.linkedin.com/in/zoyashaikh-iitr"],
                 ["Figma Portfolio", "#"],
                 ["Read.cv", "#"],
                 ["Instagram", "#"],
