@@ -14,9 +14,7 @@ import heroSliderImg from "@/assets/3sliderpost.jpg";
 import z1 from "@/assets/z1.png";
 import z2 from "@/assets/z2.png";
 import z3 from "@/assets/z3.png";
-import z4 from "@/assets/z4.png";
 import ev1 from "@/assets/ev1.png";
-import ev2 from "@/assets/ev2.png";
 import ev3 from "@/assets/ev3.png";
 import ev4 from "@/assets/ev4.png";
 import ev5 from "@/assets/ev5.png";
@@ -659,13 +657,20 @@ function BeyondTheGridSection({ openLightbox }: { openLightbox: (src: string) =>
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div
+            className="mt-10 flex gap-5 overflow-x-auto overscroll-x-contain scroll-smooth pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            style={{
+              touchAction: "pan-y",
+              scrollSnapType: "x proximity",
+              WebkitOverflowScrolling: "touch",
+            }}
+          >
             {images.map((image, index) => (
               <button
                 key={`beyond-the-grid-${image.alt}-${index}`}
                 type="button"
                 onClick={() => openLightbox(image.src)}
-                className="group block w-full overflow-hidden rounded-[20px] bg-white text-left shadow-sm ring-1 ring-black/6 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-foreground/30"
+                className="group block w-[min(88vw,26rem)] shrink-0 snap-start overflow-hidden rounded-[20px] bg-white text-left shadow-sm ring-1 ring-black/6 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-foreground/30 md:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)]"
               >
                 <img
                   src={image.src}
@@ -846,7 +851,6 @@ function SocialMediaSection({ openLightbox }: { openLightbox: (src: string) => v
                   { src: z1, alt: "Zonal campaign post 1" },
                   { src: z2, alt: "Zonal campaign post 2" },
                   { src: z3, alt: "Zonal campaign post 3" },
-                  { src: z4, alt: "Zonal campaign post 4" },
                 ]}
                 delay={480}
                 openLightbox={openLightbox}
@@ -869,7 +873,6 @@ function SocialMediaSection({ openLightbox }: { openLightbox: (src: string) => v
                   <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                     {[
                       { src: ev1, alt: "MIND THE PRODUCT" },
-                      { src: ev2, alt: "TRADING HEIST" },
                       { src: ev3, alt: "IPL AUCTION" },
                       { src: ev4, alt: "Event campaign post 4" },
                       { src: ev5, alt: "Event campaign post 5" },
