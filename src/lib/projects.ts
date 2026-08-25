@@ -35,7 +35,7 @@ import s7 from "@/assets/s7.png";
 import s8 from "@/assets/s8.png";
 import s9 from "@/assets/s9.png";
 import s10 from "@/assets/s10.png";
-import azerCaseStudy from "@/assets/AZERR.png";
+import azerCaseStudy from "@/assets/AAZER.png";
 import irctcCaseStudy from "@/assets/irctcdeck.png";
 import pmxCaseStudy from "@/assets/pmxx.png";
 
