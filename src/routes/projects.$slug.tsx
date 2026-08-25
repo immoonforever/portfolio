@@ -848,6 +848,7 @@ function SocialMediaSection({ openLightbox }: { openLightbox: (src: string) => v
               <SocialMediaGrid
                 heading="PANEL DISCUSSIONS"
                 description="Perspectives that spark dialogue - from women in entrepreneurship and young founders shaping tomorrow to industry leaders building the cities and businesses of the future."
+                centerIncompleteRow
                 posts={[
                   { src: stpImg, alt: "Panel discussion post 1" },
                   { src: bftImg, alt: "Panel discussion post 2" },
