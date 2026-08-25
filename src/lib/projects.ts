@@ -211,7 +211,7 @@ const azer: ProductProject = {
   hero: projNoosphere,
   tags: ["User Research", "Accessibility", "Interaction Design", "AI Assistance"],
   role: "Product Design, UX Research, Accessibility Design, Interaction Design",
-  timeline: "2 Days · 2025",
+  timeline: "36-Hour Hackathon · Syntax Error, IIT Roorkee\n2nd Prize · Accessibility Track",
   team: "Solo Project",
   tools: ["Figma", "FigJam", "Adobe Illustrator"],
   deliverable: "Research Report, UX Case Study, High-Fidelity Prototype, Accessibility Design System",

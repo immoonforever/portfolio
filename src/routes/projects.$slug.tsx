@@ -384,12 +384,16 @@ const hasCaseStudy = Boolean(project.caseStudyImage) || Boolean(project.caseStud
                   {cell.label}
                 </p>
                 <p
-                  className="mt-2 text-[13px] leading-[1.5] text-[#171717]"
+                  className={`mt-2 text-[13px] leading-[1.5] text-[#171717] ${
+                    cell.label === "Timeline" ? "whitespace-pre-line" : ""
+                  }`}
                   style={{ fontFamily: '"Instrument Sans", sans-serif', fontWeight: 400, letterSpacing: "-0.01em" }}
                 >
                   {cell.label === "Team"
                     ? cell.value.replace("Team of 4", "4")
-                    : cell.value.replace(/\n/g, ", ").replace(/\s*·\s*/g, " · ")}
+                    : cell.label === "Timeline"
+                      ? cell.value.replace(/\s*·\s*/g, " · ")
+                      : cell.value.replace(/\n/g, ", ").replace(/\s*·\s*/g, " · ")}
                 </p>
               </div>
             ))}
