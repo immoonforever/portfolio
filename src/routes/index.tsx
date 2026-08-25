@@ -1185,7 +1185,7 @@ const experience = [
     year: "2026 - PRESENT",
     role: "Design Head",
     org: "E-Cell, IIT Roorkee",
-    note: "Lead a multidisciplinary design team across product/UI, visual identity, branding, event design, campaigns, merchandise, web and social. I work across both strategy and execution, building cohesive visual systems that carry consistently across digital and physical touchpoints.",
+    note: "Leading a multidisciplinary design team across product/UI, visual identity, branding, event design, campaigns, merchandise, web and social. I work across both strategy and execution, building cohesive visual systems that carry consistently across digital and physical touchpoints.",
   },
   {
     year: "Jan 2026 - Apr 2026",
