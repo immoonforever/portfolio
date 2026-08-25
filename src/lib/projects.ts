@@ -37,7 +37,7 @@ import s9 from "@/assets/s9.png";
 import s10 from "@/assets/s10.png";
 import azerCaseStudy from "@/assets/AAZER.png";
 import irctcCaseStudy from "@/assets/irctcdeck.png";
-import pmxCaseStudy from "@/assets/pmxx.png";
+import pmxCaseStudy from "@/assets/PPMX (1).png";
 
 export type ProjectKind = "product" | "brand" | "editorial";
 
