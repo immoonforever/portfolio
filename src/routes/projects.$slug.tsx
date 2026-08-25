@@ -462,9 +462,11 @@ function SocialMediaGrid({
   intro,
   stages,
   delay = 0,
+  centerIncompleteRow = false,
   openLightbox,
 }: SocialMediaGroup & {
   delay?: number;
+  centerIncompleteRow?: boolean;
   openLightbox: (src: string) => void;
 }) {
   return (
@@ -538,13 +540,21 @@ function SocialMediaGrid({
             </div>
           </div>
         ) : (
-          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <div
+            className={
+              centerIncompleteRow
+                ? "mt-8 flex flex-wrap justify-center gap-5"
+                : "mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3"
+            }
+          >
             {posts.map((post, index) => (
               <button
                 key={`${heading}-${post.alt}-${index}`}
                 type="button"
                 onClick={() => openLightbox(post.src)}
-                className="group overflow-hidden rounded-[20px] bg-white text-left shadow-sm ring-1 ring-black/6 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-foreground/30"
+                className={`group overflow-hidden rounded-[20px] bg-white text-left shadow-sm ring-1 ring-black/6 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-foreground/30 ${
+                  centerIncompleteRow ? "w-full sm:w-[calc((100%-1.25rem)/2)] xl:w-[calc((100%-2.5rem)/3)]" : ""
+                }`}
               >
                 <img
                   src={post.src}
@@ -808,6 +818,7 @@ function SocialMediaSection({ openLightbox }: { openLightbox: (src: string) => v
               <SocialMediaGrid
                 heading="SPECIAL EVENTS"
                 description="Beyond the core competitions - a lineup of on-ground experiences, live music, comedy, cultural showcases, and immersive events designed to bring the E-Summit experience to life."
+                centerIncompleteRow
                 posts={[
                   { src: abnImg, alt: "Special event post 1" },
                   { src: tisImg, alt: "Special event post 2" },
