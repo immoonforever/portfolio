@@ -1,0 +1,350 @@
+import projIrctc from "@/assets/proj-irctc.jpg";
+import projAthira from "@/assets/proj-athira.jpg";
+import projEsummit from "@/assets/proj-esummit.jpg";
+import projNoosphere from "@/assets/proj-noosphere.jpg";
+import brandCafe from "@/assets/brand-cafe.jpg";
+import brandCec from "@/assets/brand-cec.jpg";
+import brandMerch from "@/assets/brand-merch.jpg";
+import brandSocial from "@/assets/brand-social.jpg";
+import brandPoster from "@/assets/brand-poster.jpg";
+import lahorizeeracover from "@/assets/lahorizeeracover.png";
+
+/* ---------------------------------------------------------------------------
+ * Project architecture
+ *   product   → unified case-study page with embedded PDF viewer
+ *   brand     → E-Summit 2026 brand system with sub-pages
+ *   editorial → Instagram-style single-frame carousel
+ *
+ * The lists below are wired to the real portfolio assets and routes already\r\n * present in the repository.
+ * ------------------------------------------------------------------------- */
+
+export type ProjectKind = "product" | "brand" | "editorial";
+
+export type ProjectBase = {
+  slug: string;
+  title: string;
+  kind: ProjectKind;
+  category: string;
+  summary: string;
+  hero: string;
+  tags: string[];
+};
+
+/* -------- Product -------- */
+export type ProductProject = ProjectBase & {
+  kind: "product";
+  role: string;
+  timeline: string;
+  team: string;
+  tools: string[];
+  deliverable: string;
+  overview: string;
+  /** Path to case-study PDF. If missing, page shows a "coming soon" state. */
+  pdfUrl?: string;
+};
+
+/* -------- Brand -------- */
+export type BrandSystemCard = {
+  key: "story" | "logo" | "typography" | "colors" | "graphic-language";
+  label: string;
+  blurb: string;
+  cover: string;
+};
+export type BrandApplication = {
+  key: "digital-promotion" | "website" | "event-experience";
+  label: string;
+  blurb: string;
+  cover: string;
+  images: string[]; // unlimited uploads
+};
+export type BrandColor = { name: string; hex: string };
+
+export type BrandProject = ProjectBase & {
+  kind: "brand";
+  role: string;
+  timeline: string;
+  overview: string;
+  system: BrandSystemCard[];
+  systemDetail: {
+    story: string;
+    logo: string[];
+    typography: { display: string; text: string; note: string };
+    colors: BrandColor[];
+    graphicLanguage: { blurb: string; images: string[] };
+  };
+  applications: BrandApplication[];
+  reflection: string;
+};
+
+/* -------- Editorial -------- */
+export type EditorialProject = ProjectBase & {
+  kind: "editorial";
+  role: string;
+  timeline: string;
+  overview: string;
+  carousel: string[]; // ordered frames - order preserved exactly
+};
+
+export type Project = ProductProject | BrandProject | EditorialProject;
+
+/* --------------------------------------------------------------------------
+ * PRODUCT
+ * ------------------------------------------------------------------------ */
+
+const azer: ProductProject = {
+  slug: "azer",
+  kind: "product",
+  title: "AZER",
+  category: "Product · Marketplace",
+  summary:
+    "A quiet marketplace concept for pre-owned luxury - trust designed as a first-class feature, not an afterthought bolted on after checkout.",
+  hero: projNoosphere,
+  tags: ["Product Design", "Strategy", "0 → 1"],
+  role: "Product Design, Strategy",
+  timeline: "6 weeks · 2025",
+  team: "Solo",
+  tools: ["Figma", "FigJam", "Notion"],
+  deliverable: "Case study deck + clickable prototype",
+  overview:
+    "AZER is a 0→1 marketplace study exploring how pre-owned luxury can feel trustworthy without borrowing the visual language of banking apps. ",
+  pdfUrl: "/decks/azer.pdf",
+};
+
+const pmx: ProductProject = {
+  slug: "pmx",
+  kind: "product",
+  title: "PMX",
+  category: "Product · SaaS",
+  summary:
+    "A product-management workspace designed to reduce ceremony and make the next decision feel obvious.",
+  hero: projNoosphere,
+  tags: ["Product Design", "SaaS"],
+  role: "Product Design",
+  timeline: "8 weeks · 2025",
+  team: "Solo",
+  tools: ["Figma", "Notion"],
+  deliverable: "Case study deck",
+  overview:
+    "PMX is a product-management workspace study. ",
+  pdfUrl: "/decks/pmx.pdf",
+};
+
+const trustfix: ProductProject = {
+  slug: "trustfix",
+  kind: "product",
+  title: "TrustFix",
+  category: "Product · Services",
+  summary:
+    "A service-marketplace concept built around a single question - can a booking flow earn a customer's trust before the technician arrives?",
+  hero: projAthira,
+  tags: ["Product Design", "Services"],
+  role: "Product Design, Strategy",
+  timeline: "6 weeks · 2025",
+  team: "Solo",
+  tools: ["Figma", "FigJam"],
+  deliverable: "Case study deck",
+  overview:
+    "TrustFix is a home-services booking study. ",
+  pdfUrl: "/decks/trustfix.pdf",
+};
+
+const indusind: ProductProject = {
+  slug: "indusind-protect",
+  kind: "product",
+  title: "IndusInd Protect",
+  category: "Product · Fintech",
+  summary:
+    "A protection-plan experience for a large Indian bank - legible, calm, and quietly reassuring at the moment of purchase.",
+  hero: projIrctc,
+  tags: ["Product Design", "Fintech"],
+  role: "Product Design",
+  timeline: "10 weeks · 2025",
+  team: "Design pod",
+  tools: ["Figma", "Notion"],
+  deliverable: "Case study deck",
+  overview:
+    "IndusInd Protect is a fintech protection-plan study. ",
+  pdfUrl: "/decks/indusind-protect.pdf",
+};
+
+const irctc: ProductProject = {
+  slug: "irctc-ai-copilot",
+  kind: "product",
+  title: "IRCTC AI Copilot",
+  category: "Product · Conversational AI",
+  summary:
+    "Rethinking India's largest booking system as a single conversational surface - one that quietly replaces twelve broken flows with a copilot that knows how travel actually works in this country.",
+  hero: projIrctc,
+  tags: ["Product Design", "Conversational AI", "Strategy"],
+  role: "Product Design, Strategy",
+  timeline: "8 weeks · 2025",
+  team: "Solo",
+  tools: ["Figma", "FigJam", "Principle"],
+  deliverable: "Case study deck + north-star prototype",
+  overview:
+    "IRCTC AI Copilot collapses booking, PNR, refunds and travel help into one conversational surface. ",
+  pdfUrl: "/decks/irctc-ai-copilot.pdf",
+};
+
+export const productProjects: ProductProject[] = [azer, pmx, trustfix, indusind, irctc];
+
+/* --------------------------------------------------------------------------
+ * BRAND - E-Summit 2026
+ * ------------------------------------------------------------------------ */
+
+const esummit: BrandProject = {
+  slug: "e-summit-2026",
+  kind: "brand",
+  title: "E-Summit 2026",
+  category: "Brand identity · Event system",
+  summary:
+    "The flagship identity for one of India's largest student entrepreneurship summits - a system built to hold a hundred touchpoints without losing its voice.",
+  hero: projEsummit,
+  tags: ["Brand Identity", "Event System", "Visual Design"],
+  role: "Design Lead - identity, print, digital",
+  timeline: "14 weeks · 2025–26",
+  overview:
+    "A full identity system for E-Summit 2026 at IIT Roorkee - logotype, typographic system, colour, graphic language, and the printed and digital collateral around a three-day event.",
+  system: [
+    { key: "story",           label: "Brand Story",     blurb: "The idea the identity is trying to hold.",         cover: projEsummit },
+    { key: "logo",            label: "Logo",            blurb: "Wordmark, monogram, and safe-space rules.",         cover: projEsummit },
+    { key: "typography",      label: "Typography",      blurb: "The type system across print and digital.",         cover: brandPoster },
+    { key: "colors",          label: "Colour Palette",  blurb: "Primary, secondary and quiet neutrals.",            cover: brandCafe },
+    { key: "graphic-language",label: "Graphic Language",blurb: "Grid, dividers and the small library of motifs.",   cover: brandSocial },
+  ],
+  systemDetail: {
+    story:
+      "E-Summit 2026 is written as a serious room, not a pep rally. The identity is warm, contemporary, and slightly stubborn - a mark that can survive being enlarged onto a stage and reduced onto a wristband. E-Summit 2026 is built around Transcending the Paradigm - a visual language of forward motion, transformation and possibility that scales from digital promotion to on-ground event branding.",
+    logo: [projEsummit],
+    typography: {
+      display: "Instrument Serif",
+      text: "Inter Tight",
+      note: "A high-contrast display serif set against a neutral geometric sans - the same pairing carried across print, digital and film.",
+    },
+    colors: [
+      { name: "Ink", hex: "#111111" },
+      { name: "Paper", hex: "#F7F3EC" },
+      { name: "Terracotta", hex: "#B0553C" },
+      { name: "Moss", hex: "#3D4A34" },
+      { name: "Bone", hex: "#E7E0D2" },
+    ],
+    graphicLanguage: {
+      blurb:
+        "A quiet grid, a family of editorial rules and a small library of typographic marks - enough surface to stay recognisable across forty touchpoints without ever becoming loud.",
+      images: [brandPoster, brandSocial, brandMerch],
+    },
+  },
+  applications: [
+    {
+      key: "digital-promotion",
+      label: "Digital Promotion",
+      blurb: "Instagram posts, carousel posts, recruitment creatives, speaker announcements, stories, LinkedIn creatives, reel covers.",
+      cover: brandSocial,
+      images: [brandSocial, brandPoster, projEsummit, brandCafe, brandMerch, brandCec],
+    },
+    {
+      key: "website",
+      label: "Website & Digital Experience",
+      blurb: "Website screens, responsive layouts, components and interaction studies.",
+      cover: projEsummit,
+      images: [projEsummit, brandCec, brandPoster, brandSocial],
+    },
+    {
+      key: "event-experience",
+      label: "Event Experience",
+      blurb: "Certificates, hoodies, banners, pens, bags, keychains, badges, stage branding, kiosks, signage and event photography.",
+      cover: brandMerch,
+      images: [brandMerch, projEsummit, brandPoster, brandCec, brandSocial, brandCafe],
+    },
+  ],
+  reflection:
+    "A brand system is a promise you make to the next team. The measure of this one is how little the following edition has to argue with it.",
+};
+
+export const brandProjects: BrandProject[] = [esummit];
+
+/* --------------------------------------------------------------------------
+ * EDITORIAL - 4 campaigns
+ * ------------------------------------------------------------------------ */
+
+function editorial(
+  slug: string,
+  title: string,
+  category: string,
+  summary: string,
+  hero: string,
+  carousel: string[],
+): EditorialProject {
+  return {
+    slug,
+    kind: "editorial",
+    title,
+    category,
+    summary,
+    hero,
+    tags: [category.split(" · ")[0] ?? "Editorial"],
+    role: "Art direction, editorial design",
+    timeline: "2025",
+    overview:
+      "A short-form campaign study built from the actual work, with the frames carrying the visual narrative.",
+    carousel,
+  };
+}
+
+const labubu = editorial(
+  "labubu-campaign",
+  "Labubu Campaign",
+  "Campaign · Toy culture",
+  "A short campaign concept for a toy IP - playful without becoming childish, editorial without becoming cold.",
+  brandSocial,
+  [brandSocial, brandMerch, brandPoster, brandCafe, projEsummit, brandCec, brandSocial, brandMerch],
+);
+
+const lahori = editorial(
+  "lahori-jeera",
+  "Lahori Jeera",
+  "Campaign · FMCG",
+  "A colour-led campaign concept for an FMCG beverage - vibrant, direct, and unafraid of the shelf.",
+  lahorizeeracover,
+  [brandCafe, brandMerch, brandSocial, brandPoster, projEsummit, brandCafe, brandMerch, brandSocial],
+);
+
+const decode = editorial(
+  "decode-the-fault",
+  "Decode the Fault",
+  "Editorial · Explainer",
+  "A carousel-first explainer series that untangles a technical subject one frame at a time.",
+  brandMerch,
+  [brandMerch, brandPoster, brandSocial, projEsummit, brandCec, brandCafe, brandMerch, brandPoster],
+);
+
+export const editorialProjects: EditorialProject[] = [labubu, lahori, decode];
+
+/* --------------------------------------------------------------------------
+ * Registry helpers
+ * ------------------------------------------------------------------------ */
+
+export const projects: Project[] = [
+  ...productProjects,
+  ...brandProjects,
+  ...editorialProjects,
+];
+
+export function getProjectBySlug(slug: string): Project | undefined {
+  return projects.find((p) => p.slug === slug);
+}
+
+/** Next project scoped by kind (wraps). */
+export function getNextByKind(slug: string): Project {
+  const p = getProjectBySlug(slug);
+  const pool = p
+    ? projects.filter((x) => x.kind === p.kind)
+    : projects;
+  const i = pool.findIndex((x) => x.slug === slug);
+  return pool[(i + 1) % pool.length];
+}
+
+export function getBrand(slug: string): BrandProject | undefined {
+  const p = getProjectBySlug(slug);
+  return p?.kind === "brand" ? p : undefined;
+}

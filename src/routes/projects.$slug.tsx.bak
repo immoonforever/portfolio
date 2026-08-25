@@ -1,0 +1,487 @@
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+
+import { getBrand } from "@/lib/projects";
+import heroSliderImg from "@/assets/3sliderpost.jpg";
+const extendedLogo = "/assets/esummitidentity-BCxZkC8M.png";
+const palette = [
+  { name: "MIDNIGHT / SPACE", hex: "#05091F", note: "Primary background colour. Use for the deepest backgrounds and large negative-space areas." },
+  { name: "DEEP NAVY", hex: "#071B4A", note: "Secondary background. This should dominate the darker E-Summit surfaces." },
+  { name: "ROYAL INDIGO", hex: "#252B9B", note: "Main indigo/blue gradient areas and UI/card surfaces." },
+  { name: "ELECTRIC BLUE", hex: "#0878E8", note: "Primary energetic accent, buttons, highlights and important visual details." },
+  { name: "VIOLET", hex: "#6946D8", note: "Use sparingly for gradients, glow effects and secondary accents." },
+  { name: "CYAN", hex: "#25C7FF", note: "Luminous highlights, thin lines, glow and futuristic details." },
+  { name: "FEATHER ORANGE", hex: "#FF7A24", note: "Small accent inspired by the feather motif; never dominant." },
+  { name: "GOLD", hex: "#FFC857", note: "Very sparing highlights reflecting warm golden particles in the feather artwork." },
+  { name: "WHITE", hex: "#FFFFFF", note: "Primary text and high-contrast elements." },
+  { name: "SOFT BLUE-WHITE", hex: "#D9E5FF", note: "Secondary text instead of using pure white everywhere." },
+] as const;
+const countdownFeather = "/assets/100dayss-B5LqMzPy.png";
+const countdownWings = "/assets/50days-BKpnH9LG.png";
+const countdownPhoenix = "/assets/1day-Bu-AmyCf.png";
+const eventPosts = [
+  "/assets/ev1-DZ0pJQgf.png",
+  "/assets/ev2-BZhjND5V.png",
+  "/assets/ev3-quZOVMLM.png",
+  "/assets/ev4-CS3H8bT-.png",
+  "/assets/ev5-TRrkavJS.png",
+  "/assets/ev6-DTfKUidA.png",
+  "/assets/ev7-C5jvIEYW.png",
+  "/assets/ev8-B8tobjfr.png",
+  "/assets/ev9-CRpYCCzl.png",
+  "/assets/ev10-CSHvrKPt.png",
+];
+const specialEvents = [
+  "/assets/abn-B85uZEOl.png",
+  "/assets/tis-C0fTe__3.png",
+  "/assets/sp1-Dz3y0rt0.png",
+  "/assets/sp2-Bmchb6Bh.png",
+  "/assets/sp3-D9Ny7pei.png",
+];
+const speakers = [
+  "/assets/Shubhanshu%20Shukla-BXvgGJ66.png",
+  "/assets/speakertemplate-B-xwKP5e.png",
+  "/assets/am-ChBd3Mmi.png",
+  "/assets/rs-BLM8aCDs.png",
+  "/assets/ar-O9J2iX9m.png",
+  "/assets/anupam-BvjlFVdY.png",
+];
+const panels = [
+  "/assets/stp-Bf6N-FMQ.png",
+  "/assets/bft-CAB0q59x.png",
+  "/assets/wwb-BJvKb8LU.png",
+  "/assets/cee-cV4qDykT.png",
+  "/assets/eov-PcJu9WVl.png",
+];
+const workshops = [
+  "/assets/w1-Dk04Qmx5.png",
+  "/assets/wc1-DnNKq_9h.png",
+  "/assets/g-WgIclE04.png",
+];
+const zonals = [
+  "/assets/z1-BVdueEuS.png",
+  "/assets/z2-Cq9F886B.png",
+  "/assets/z3-DSDcunUE.png",
+  "/assets/z4-DQvxd3gU.png",
+];
+const brochure = "/assets/esummitidentity-BCxZkC8M.png";
+const idCards = ["/assets/idcard1-Cpxd3nny.png", "/assets/IDCARD2-CK6OE-uk.png", "/assets/esummitidentity-BCxZkC8M.png"];
+const participantCards = [
+  "/assets/id1-CmT4Edsi.png",
+  "/assets/id2-Bkt5vHzW.png",
+  "/assets/id3-D6ExNJJc.png",
+  "/assets/id4-Cu3SSCXr.png",
+];
+const banners = [
+  "/assets/mj5-CKV1tnOW.png",
+  "/assets/as-CG1r5Q6L.png",
+  "/assets/b-CrnOg1Cu.png",
+  "/assets/b1-4VC_6b1W.png",
+  "/assets/b2-BWtDeJv2.png",
+  "/assets/b3-DTE1Nb3o.png",
+];
+const dropdowns = ["/assets/d1-DFvKU_rK.png", "/assets/d2-4LRU7fcN.png", "/assets/d3-riCUa17r.png"];
+const invitation = "/assets/ii-CqP0LJyU.png";
+
+export const Route = createFileRoute("/projects/$slug")({
+  loader: ({ params }) => {
+    const brand = getBrand(params.slug);
+    if (!brand) throw notFound();
+    return { brand };
+  },
+  head: ({ loaderData }) => {
+    if (!loaderData) return { meta: [{ title: "Not found - Zoya Shaikh" }] };
+    const title = `${loaderData.brand.title} - Zoya Shaikh`;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: loaderData.brand.summary },
+        { property: "og:title", content: title },
+        { property: "og:description", content: loaderData.brand.summary },
+      ],
+    };
+  },
+  component: BrandLandingPage,
+});
+
+function BrandLandingPage() {
+  const { brand } = Route.useLoaderData();
+  const [lightbox, setLightbox] = useState<string | null>(null);
+
+  return (
+    <main className="bg-background text-foreground font-sans">
+      <header className="fixed inset-x-0 top-0 z-50 bg-background/75 backdrop-blur-md">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-5 md:px-10">
+          <Link to="/" className="font-display text-[22px] leading-none">
+            Zoya <span className="italic text-muted-foreground">Shaikh</span>
+          </Link>
+          <Link to="/" className="link-underline text-[13px] text-muted-foreground">
+            <span className="link-underline-inner hover:text-foreground">← Back to work</span>
+          </Link>
+        </div>
+      </header>
+
+      <nav className="mx-auto max-w-[1440px] px-6 pt-32 text-[12px] uppercase tracking-[0.16em] text-muted-foreground md:px-10 md:pt-40">
+        <ol className="flex flex-wrap gap-3">
+          <li><Link to="/" className="hover:text-foreground">Home</Link></li>
+          <li aria-hidden>/</li>
+          <li className="text-foreground">{brand.title}</li>
+        </ol>
+      </nav>
+
+      <section className="relative overflow-hidden">
+        <div className="mx-auto max-w-[1440px] px-6 pt-24 md:px-10 md:pt-32">
+          <div className="grid items-center gap-12 md:grid-cols-12 md:gap-16">
+            <div className="md:col-span-5">
+              <p className="eyebrow">FLAGSHIP CASE STUDY</p>
+              <h1 className="mt-5 max-w-[10ch] font-display text-[54px] leading-[0.92] tracking-tight sm:text-[72px] md:text-[88px] lg:text-[108px]">
+                E-Summit 2026
+              </h1>
+              <p className="mt-6 max-w-[34rem] text-[17px] leading-[1.8] text-muted-foreground md:text-[19px]">
+                Building the complete visual identity system for IIT Roorkee's flagship entrepreneurship festival.
+              </p>
+              <a
+                href="#brand-identity"
+                className="mt-8 inline-flex items-center gap-3 rounded-full border border-foreground/20 bg-foreground px-6 py-3.5 text-[13px] font-medium tracking-wide text-background transition-transform hover:-translate-y-[1px] hover:bg-foreground/90"
+              >
+                Explore Brand System <span aria-hidden>→</span>
+              </a>
+            </div>
+
+            <div className="md:col-span-7">
+              <div className="flex justify-center md:justify-end">
+                <div className="w-full max-w-[920px] overflow-hidden rounded-[28px] border border-foreground/10 bg-white shadow-[0_20px_50px_-36px_rgba(20,15,10,0.28)]">
+                  <img
+                    src={heroSliderImg}
+                    alt="E-Summit 2026 flagship case study hero"
+                    loading="eager"
+                    className="block h-auto w-full object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="brand-identity" className="border-t border-line py-24 md:py-32">
+        <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-12 px-6 md:grid-cols-2 md:gap-16 md:px-10">
+          <div className="space-y-8">
+            <div><span className="eyebrow block">Role</span><p className="mt-2 text-foreground">{brand.role}</p></div>
+            <div><span className="eyebrow block">Timeline</span><p className="mt-2 text-foreground">{brand.timeline}</p></div>
+            <div><span className="eyebrow block">Discipline</span><p className="mt-2 text-foreground">{brand.category}</p></div>
+          </div>
+          <p className="max-w-2xl text-[18px] leading-[1.7] text-muted-foreground">{brand.overview}</p>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#05091F] py-16 md:py-18">
+        <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+          <p className="eyebrow text-[#D9E5FF]">Brand Foundation</p>
+          <p className="font-display mt-5 max-w-[1200px] text-[28px] leading-[1.22] text-white md:text-[32px]">
+            {brand.systemDetail.story}
+          </p>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-gradient-to-b from-[#071B4A] via-[#05091F] to-[#05091F] py-20 md:py-24">
+        <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+          <p className="eyebrow text-[#D9E5FF]">BRAND IDENTITY</p>
+          <h2 className="font-display text-[36px] leading-[1] text-white md:text-[48px]">Transcending the Paradigm</h2>
+          <p className="mt-4 max-w-lg text-[#D9E5FF]">
+            E-Summit '26 is built around the idea of moving beyond conventional boundaries, represented through a visual language of forward motion, transformation, technology, and possibility.
+          </p>
+
+          <div className="mt-12">
+            <p className="eyebrow text-[#D9E5FF]">LOGO</p>
+            <div className="mt-6 w-full rounded-[24px] border border-white/10 bg-gradient-to-br from-[#05091F] via-[#071B4A] to-[#252B9B] px-6 py-8 shadow-[0_0_0_1px_rgba(37,199,255,0.12),0_30px_80px_-50px_rgba(105,70,216,0.65)] md:px-10 md:py-10">
+              <div className="mx-auto flex max-w-[1120px] justify-center">
+                <img src={extendedLogo} alt="E-Summit '26 extended logo" className="h-auto w-full max-w-[860px] object-contain" />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12">
+            <p className="eyebrow">COLOUR PALETTE</p>
+            <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-5">
+              {palette.map((swatch) => (
+                <div
+                  key={swatch.name}
+                  className="overflow-hidden rounded-[18px] border border-white/10 bg-[#071B4A]/20 shadow-[0_20px_50px_-35px_rgba(0,0,0,0.55)]"
+                >
+                  <div
+                    className="h-24 w-full"
+                    style={
+                      swatch.name === "VIOLET"
+                        ? { backgroundImage: "linear-gradient(135deg, #252B9B 0%, #6946D8 100%)" }
+                        : swatch.name === "CYAN"
+                          ? { backgroundImage: "linear-gradient(135deg, #0878E8 0%, #25C7FF 100%)" }
+                          : swatch.name === "FEATHER ORANGE"
+                            ? { backgroundImage: "linear-gradient(135deg, #FF7A24 0%, #FFC857 100%)" }
+                            : { backgroundColor: swatch.hex }
+                    }
+                  />
+                  <div className="space-y-2 border-t border-white/10 px-4 py-4">
+                    <p className="text-[12px] font-medium uppercase tracking-[0.16em] text-white">{swatch.name}</p>
+                    <p className="text-[13px] text-[#D9E5FF]">{swatch.hex}</p>
+                    <p className="text-[12px] leading-[1.6] text-[#D9E5FF]/80">{swatch.note}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-14 border-t border-line/60 pt-8">
+            <p className="eyebrow text-[#D9E5FF]">TYPOGRAPHY</p>
+            <div className="mt-6 max-w-[1040px] space-y-4">
+              <p className="font-display text-[40px] leading-[0.98] text-white md:text-[54px]">E-SUMMIT '26</p>
+              <p className="font-display text-[28px] leading-[1] text-[#D9E5FF] md:text-[38px]">TRANSCENDING THE PARADIGM</p>
+              <p className="text-base text-[#D9E5FF]">Ideas. Innovation. Impact.</p>
+            </div>
+          </div>
+
+          <div className="mt-18 border-t border-line/60 pt-10">
+            <p className="eyebrow text-[#D9E5FF]">VISUAL LANGUAGE</p>
+            <ul className="mt-6 max-w-[1040px] list-inside list-disc space-y-2 text-[#D9E5FF]">
+              <li><strong>FORWARD MOTION</strong>: Directional lines, arrows and sweeping forms communicate progress.</li>
+              <li><strong>TRANSFORMATION</strong>: Evolving forms, gradients, particles and light represent change.</li>
+              <li><strong>DIGITAL ENERGY</strong>: Electric blue gradients, glowing elements and futuristic compositions create a technology-forward atmosphere.</li>
+              <li><strong>CONTRAST</strong>: Deep dark backgrounds against bright blue and white typography create strong visual hierarchy.</li>
+              <li><strong>GEOMETRIC STRUCTURE</strong>: Circles, grids, lines and structured layouts reinforce the idea of systems, technology and innovation.</li>
+            </ul>
+          </div>
+
+          <div className="mt-12">
+            <p className="eyebrow text-[#D9E5FF]">THE IDEA BEHIND THE IDENTITY</p>
+            <p className="mt-4 max-w-lg text-[#D9E5FF]">
+              Transcending the Paradigm is expressed through a visual system that constantly moves forward. The identity combines directional geometry, electric blue energy, high-contrast typography and transformational imagery to represent ideas breaking beyond established boundaries.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <CampaignSection
+        title="01 - COUNTDOWN CAMPAIGN"
+        subtitle="A visual reveal, one stage at a time."
+        intro="The Phoenix was introduced progressively through the countdown - moving from a single feather to the wings and finally the complete Phoenix."
+        stages={[
+          { number: "01", title: "THE FEATHER", description: "The first hint of the Phoenix - introducing the visual motif before revealing the larger idea.", src: countdownFeather, alt: "Countdown Campaign - The Feather" },
+          { number: "02", title: "THE WINGS", description: "The identity expands, creating a stronger sense of movement, emergence and transformation.", src: countdownWings, alt: "Countdown Campaign - The Wings" },
+          { number: "03", title: "THE PHOENIX", description: "The full symbol is revealed, connecting the countdown to the larger idea of \"Transcending the Paradigm.\"", src: countdownPhoenix, alt: "Countdown Campaign - The Phoenix" },
+        ]}
+        onOpen={setLightbox}
+      />
+
+      <MediaSection title="EVENT ITINERARY" description="A day-wise visual guide to the E-Summit experience, bringing together key events, workshops, sessions, and activities across the summit." posts={eventPosts} onOpen={setLightbox} />
+      <MediaSection title="SPECIAL EVENTS" description="Beyond the core competitions - a lineup of on-ground experiences, live music, comedy, cultural showcases, and immersive events designed to bring the E-Summit experience to life." posts={specialEvents} onOpen={setLightbox} />
+      <MediaSection title="SPEAKER SESSIONS" description="Voices shaping ideas, industries, and the future - from entrepreneurs and industry leaders to zonal speakers bringing perspectives from across the country." posts={speakers} onOpen={setLightbox} />
+      <MediaSection title="PANEL DISCUSSIONS" description="Perspectives that spark dialogue - from women in entrepreneurship and young founders shaping tomorrow to industry leaders building the cities and businesses of the future." posts={panels} onOpen={setLightbox} />
+      <MediaSection title="WORKSHOP PROMOTION" description="Learn from the people building what’s next - from startup masterclasses and business consulting to technology, analytics, and hands-on industry sessions." posts={workshops} onOpen={setLightbox} />
+      <MediaSection title="ZONALS" description="Bringing E-Summit to cities across the country, with each zonal campaign crafted exclusively around the character, culture, and visual identity of its region." posts={zonals} onOpen={setLightbox} />
+
+      <section className="border-t border-line py-20 md:py-24">
+        <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+          <p className="eyebrow">EDITORIAL DESIGN</p>
+          <h2 className="font-display text-[36px] leading-[1] md:text-[48px]">Event Brochure & Print System</h2>
+          <p className="max-w-2xl text-muted-foreground">
+            A cohesive print identity designed for E-Summit 2026, extending the brand across brochures and event collateral while maintaining consistency throughout the physical experience.
+          </p>
+          <div className="mt-10 flex justify-center">
+            <div className="relative w-full max-w-[85vw]">
+              <div className="pointer-events-none absolute right-4 top-4 z-10 rounded-full border border-black/10 bg-white/90 px-3 py-2 text-[11px] uppercase tracking-[0.16em] text-muted-foreground backdrop-blur">
+                <span className="block text-foreground">Page 1 / 18</span>
+                <span className="mt-0.5 block">Editorial Design</span>
+              </div>
+              <div className="h-[90vh] overflow-y-auto rounded-[16px] border border-line bg-white shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+                <div className="px-4 py-4 md:px-6 md:py-6">
+                  <img src={brochure} alt="E-Summit 2026 brochure" className="block h-auto w-full object-contain" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-12 border-t border-line/70 pt-8">
+            <p className="eyebrow">PRINT APPLICATIONS</p>
+            <p className="max-w-2xl text-muted-foreground">Supporting print assets that extend the same editorial system across the physical event experience.</p>
+            <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {idCards.map((src, index) => (
+                <button key={src} type="button" onClick={() => setLightbox(src)} className="overflow-hidden rounded-[18px] border border-line bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <div className="aspect-[4/5] w-full overflow-hidden bg-white">
+                    <img src={src} alt={`Print application ${index + 1}`} className="block h-full w-full object-contain" />
+                  </div>
+                </button>
+              ))}
+            </div>
+            <div className="mt-6 max-w-3xl">
+              <p className="text-[12px] uppercase tracking-[0.16em] text-muted-foreground">ID Cards</p>
+              <p className="mt-3 text-[13px] leading-[1.75] text-muted-foreground md:text-[14px]">Three ID card concepts designed for the E-Summit 2026 organizing team, exploring different visual directions while maintaining a cohesive extension of the event's brand identity.</p>
+            </div>
+            <div className="mt-10 border-t border-line/70 pt-8">
+              <p className="text-[12px] uppercase tracking-[0.16em] text-muted-foreground">PARTICIPANT ID CARDS</p>
+              <p className="mt-3 text-[13px] leading-[1.75] text-muted-foreground md:text-[14px]">Four participant pass variants designed for E-Summit 2026, using a unified visual system with color-coded access levels while maintaining a consistent brand identity.</p>
+              <div className="mt-6 grid grid-cols-2 gap-5 lg:grid-cols-4">
+                {participantCards.map((src) => (
+                  <button key={src} type="button" onClick={() => setLightbox(src)} className="overflow-hidden rounded-[18px] border border-line bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div className="aspect-[4/5] w-full overflow-hidden bg-white">
+                      <img src={src} alt="Participant ID card" className="block h-full w-full object-contain" />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-10 border-t border-line/70 pt-8">
+              <p className="eyebrow">BANNERS</p>
+              <p className="max-w-2xl text-muted-foreground">Large-format event banner designed for E-Summit 2026, extending the visual identity across on-ground branding and creating a consistent physical event experience.</p>
+              <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
+                {banners.map((src) => (
+                  <button key={src} type="button" onClick={() => setLightbox(src)} className="overflow-hidden rounded-[18px] border border-line bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <img src={src} alt="Banner creative" className="block h-auto w-full object-contain" />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-10 border-t border-line/70 pt-8">
+              <p className="eyebrow">DROPDOWNS</p>
+              <p className="max-w-2xl text-muted-foreground">Custom dropdown and wayfinding assets designed to extend the E-Summit 2026 visual identity across the physical event environment.</p>
+              <div className="mt-8 overflow-x-auto pb-2">
+                <div className="mx-auto flex min-w-max justify-center gap-5 md:min-w-0 md:max-w-[72%] md:gap-6">
+                  {dropdowns.map((src, index) => (
+                    <button key={src} type="button" onClick={() => setLightbox(src)} className="flex w-[220px] shrink-0 flex-col items-start gap-3 text-left md:w-[240px] lg:w-[260px]">
+                      <img src={src} alt={`Dropdown ${index + 1}`} className="block h-auto w-full object-contain" />
+                      <p className="text-[12px] uppercase tracking-[0.16em] text-muted-foreground">Dropdown {String(index + 1).padStart(2, "0")}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-10 border-t border-line/70 pt-8">
+              <p className="eyebrow">INVITATION</p>
+              <p className="max-w-2xl text-muted-foreground">An event invitation designed to carry the E-Summit 2026 visual identity into formal event communication.</p>
+              <div className="mt-8 flex justify-center">
+                <button type="button" onClick={() => setLightbox(invitation)} className="max-w-[640px] overflow-hidden rounded-[18px] border border-line bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <div className="px-4 py-4 md:px-6 md:py-6">
+                    <img src={invitation} alt="Invitation design" className="block h-auto w-full object-contain" />
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-line bg-black/5 py-24 md:py-32">
+        <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+          <p className="eyebrow">Reflection</p>
+          <ul className="mt-8 space-y-6">
+            {brand.reflection.split(". ").filter(Boolean).map((item) => (
+              <li key={item} className="text-[18px] leading-[1.6] text-muted-foreground">{item}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="border-t border-line bg-[#0d0b09] py-16 text-[#f5f0e6] md:py-20">
+        <div className="mx-auto flex max-w-[1440px] justify-center px-6 md:px-10">
+          <Link to="/" className="link-underline text-[13px] text-[#f5f0e6]/70">
+            <span className="link-underline-inner">← Back to work</span>
+          </Link>
+        </div>
+      </section>
+
+      {lightbox && <Lightbox src={lightbox} alt="E-Summit creative" onClose={() => setLightbox(null)} />}
+    </main>
+  );
+}
+
+function CampaignSection({
+  title,
+  subtitle,
+  intro,
+  stages,
+  onOpen,
+}: {
+  title: string;
+  subtitle: string;
+  intro: string;
+  stages: { number: string; title: string; description: string; src: string; alt: string }[];
+  onOpen: (src: string) => void;
+}) {
+  return (
+    <section className="border-t border-line py-20 md:py-24">
+      <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+        <p className="eyebrow">{title}</p>
+        <p className="mt-3 text-[15px] leading-[1.8] text-muted-foreground md:text-[16px]">{subtitle}</p>
+        <p className="mt-3 max-w-2xl text-[15px] leading-[1.8] text-muted-foreground md:text-[16px]">{intro}</p>
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {stages.map((stage) => (
+            <button key={stage.alt} type="button" onClick={() => onOpen(stage.src)} className="overflow-hidden rounded-[20px] bg-white shadow-sm ring-1 ring-black/6 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <img src={stage.src} alt={stage.alt} className="block h-auto w-full object-contain" />
+              <div className="border-t border-line/60 px-5 py-4 md:px-6">
+                <p className="text-[12px] uppercase tracking-[0.16em] text-muted-foreground">{stage.number}</p>
+                <p className="mt-2 font-display text-[39px] leading-[0.96] tracking-tight md:text-[58px]">{stage.title}</p>
+                <p className="mt-3 max-w-3xl text-[13px] leading-[1.75] text-muted-foreground md:text-[14px]">{stage.description}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MediaSection({
+  title,
+  description,
+  posts,
+  onOpen,
+}: {
+  title: string;
+  description: string;
+  posts: string[];
+  onOpen: (src: string) => void;
+}) {
+  return (
+    <section className="border-t border-line py-20 md:py-24">
+      <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+        <div className="grid items-start gap-3">
+          <p className="eyebrow">{title}</p>
+          <p className="max-w-2xl text-muted-foreground">{description}</p>
+        </div>
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {posts.map((src, index) => (
+            <button key={src} type="button" onClick={() => onOpen(src)} className="overflow-hidden rounded-[20px] bg-white text-left shadow-sm ring-1 ring-black/6 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <img src={src} alt={`${title} ${index + 1}`} className="block h-auto w-full object-contain" />
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div className="fixed inset-0 z-[100] bg-black/92 p-4 md:p-6" onClick={onClose} role="dialog" aria-modal="true" aria-label={alt}>
+      <button type="button" onClick={onClose} className="absolute right-4 top-4 rounded-full border border-white/20 bg-white/6 px-4 py-2 text-[11px] uppercase tracking-[0.16em] text-white backdrop-blur-md transition-colors hover:bg-white hover:text-black md:right-6 md:top-6">
+        Close ×
+      </button>
+      <div className="mx-auto flex h-full max-w-[1600px] items-center justify-center px-12 md:px-24" onClick={(e) => e.stopPropagation()}>
+        <img src={src} alt={alt} className="max-h-[82vh] max-w-full object-contain" />
+      </div>
+    </div>
+  );
+}
